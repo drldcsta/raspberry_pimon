@@ -66,6 +66,7 @@ while True:
     blink_light(16,1)
     blink_light(20,1)
     blink_light(21,1)
+    print(F"Starting a new game!")
     new_game = False
     pimons_lights = []
     pimons_lights.append(random_light())
@@ -81,7 +82,7 @@ while True:
     if input_state == False:
       if pin == 12: #Pin 12 should be button 4 which is the "start new game button"
         new_game = True
-      if (pin in gpio_button_to_led) and (pin != 12) and (new_game == False):
+      if (pin in gpio_button_to_led):
         print(F"Player Entry: { gpio_button_labels[pin] if  DEBUG else '***'}")
         blink_light(pin,1)
         players_lights.append(pin)
