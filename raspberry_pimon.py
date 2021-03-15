@@ -13,8 +13,8 @@ GPIO.setmode(GPIO.BCM)
 
 #Put pin outs in arrays so we don't have to hard code anywhere
 #Used for setting up hardware (not app code)
-gpio_button_pins = [12, 16, 20, 21]
-gpio_led_pins = [13,19,26]
+gpio_button_pins = [12, 18, 24, 23]
+gpio_led_pins = [17,27,22]
 
 #TODO - Find out what this actually does
 #Presumably simple boiler plate
@@ -24,16 +24,16 @@ for led in gpio_led_pins:
 #Label the button pins
 #Feels like there must be a better way to do this
 gpio_button_labels = { 12 : "start"  ,
-                16 : "red"    ,
-                20 : "yellow" ,
-                21 : "green"  
+                18 : "red"    ,
+                24 : "yellow" ,
+                23 : "green"  
               }
 
 #label the LED pins
 #this feels jank AF
-gpio_button_to_led = {  16 : 26,  
-                      20 : 19,
-                      21 : 13}
+gpio_button_to_led = {  23 : 22,  
+                      24 : 27,
+                      18 : 17}
 
 
 #Setup the pins
@@ -43,7 +43,7 @@ for pin in gpio_button_pins:
 
 # If I'd done something different this likely could have
 # taken "colour" as an arg instead of pin...but I didn't
-def blink_light(pin,count,debug=DEBUG):
+def blink_light(pin,count):
   print(F"{gpio_button_labels[pin] if DEBUG else '' }")
   for _ in range(count):
     GPIO.output(gpio_button_to_led[pin],True)
@@ -63,9 +63,9 @@ print(F"You may start a new game by pressing button 4 at any Time")
 new_game = True
 while True:
   if new_game:
-    blink_light(16,1)
-    blink_light(20,1)
-    blink_light(21,1)
+    blink_light(18,1)
+    blink_light(24,1)
+    blink_light(23,1)
     print(F"Starting a new game!")
     new_game = False
     pimons_lights = []
