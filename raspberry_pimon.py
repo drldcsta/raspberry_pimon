@@ -16,28 +16,24 @@ GPIO.setmode(GPIO.BCM)
 gpio_button_pins = [12, 18, 24, 23]
 gpio_led_pins = [17,27,22]
 
-#TODO - Find out what this actually does
-#Presumably simple boiler plate
+#Set the approppriate pins to handle output
 for led in gpio_led_pins:
   GPIO.setup(led,GPIO.OUT)
 
-#Label the button pins
-#Feels like there must be a better way to do this
-gpio_button_labels = { 12 : "start"  ,
-                18 : "red"    ,
-                24 : "yellow" ,
-                23 : "green"  
-              }
 
-#label the LED pins
-#this feels jank AF
-gpio_button_to_led = {  23 : 22,  
-                      24 : 27,
-                      18 : 17}
+gpio_button_labels = {  12 : "yellow" ,
+                        18 : "red",
+                        23 : "start",
+                        24 : "green"
+}
+
+gpio_button_to_led = {  18 : 17,  
+                        12 : 27,
+                        24 : 22}
 
 
-#Setup the pins
-#TODO - Find out what this actually does
+
+#Set the appropriate pins to handle input
 for pin in gpio_button_pins: 
   GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
@@ -64,8 +60,8 @@ new_game = True
 while True:
   if new_game:
     blink_light(18,1)
+    blink_light(12,1)
     blink_light(24,1)
-    blink_light(23,1)
     print(F"Starting a new game!")
     new_game = False
     pimons_lights = []
@@ -80,7 +76,7 @@ while True:
     input_state = GPIO.input(pin)
 
     if input_state == False:
-      if pin == 12: #Pin 12 should be button 4 which is the "start new game button"
+      if pin == 23: #Pin 12 should be button 4 which is the "start new game button"
         new_game = True
       if (pin in gpio_button_to_led):
         print(F"Player Entry: { gpio_button_labels[pin] if  DEBUG else '***'}")
